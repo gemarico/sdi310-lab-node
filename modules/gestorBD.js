@@ -45,7 +45,7 @@ module.exports = {
                 funcionCallback(null);
             } else {
                 var collection = db.collection('usuarios');
-                collection.insert(usuario, function(err, result) {
+                collection.insertOne(usuario, function(err, result) {
                     if (err) {
                         funcionCallback(null);
                     } else {
@@ -73,5 +73,23 @@ module.exports = {
                 });
             }
         });
+    },
+    modificarCancion : function(criterio, cancion, funcionCallback) {
+        this.mongo.MongoClient.connect(this.app.get('db'), function(err, db) {
+            if (err) {
+                funcionCallback(null);
+            } else {
+                var collection = db.collection('canciones');
+                collection.updateOne(criterio, {$set: cancion}, function(err, result) {
+                    if (err) {
+                        funcionCallback(null);
+                    } else {
+                        funcionCallback(result);
+                    }
+                    db.close();
+                });
+            }
+        });
     }
+
 };
