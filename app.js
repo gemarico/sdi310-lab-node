@@ -7,13 +7,15 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
+var fileUpload = require('express-fileupload');
+app.use(fileUpload());
 
 var gestorBD = require("./modules/gestorBD.js");
 gestorBD.init(app,mongo);
 
 // Variables
 app.set('port', 8081);
-app.set('db','mongodb://admin:<gema>@tiendamusical-shard-00-00-wvvdk.mongodb.net:27017,tiendamusical-shard-00-01-wvvdk.mongodb.net:27017,tiendamusical-shard-00-02-wvvdk.mongodb.net:27017/test?ssl=true&replicaSet=tiendamusical-shard-0&authSource=admin&retryWrites=true');
+app.set('db','mongodb://admin:admin@tiendamusical-shard-00-00-wvvdk.mongodb.net:27017,tiendamusical-shard-00-01-wvvdk.mongodb.net:27017,tiendamusical-shard-00-02-wvvdk.mongodb.net:27017/test?ssl=true&replicaSet=tiendamusical-shard-0&authSource=admin&retryWrites=true');
 
 
 //Rutas/controladores por lógica
