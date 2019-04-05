@@ -93,6 +93,31 @@ module.exports = function(app, swig, gestorBD) {
         });
     });
 
+    app.post("/api/cancion", function(req, res) {
+        var cancion = {
+            nombre : req.body.nombre,
+            genero : req.body.genero,
+            precio : req.body.precio,
+        }
+        // ¿Validar nombre, genero, precio?
+        gestorBD.insertarCancion(cancion, function(id){
+            if (id == null) {
+                res.status(500);
+                res.json({
+                    error : "se ha producido un error"
+                })
+            } else {
+                res.status(201);
+                res.json({
+                    mensaje : "canción insertada",
+                    _id : id
+                })
+            }
+        });
+
+    });
+
+
     app.get('/cancion/eliminar/:id', function (req, res) {
         var criterio = {"_id" : gestorBD.mongo.ObjectID(req.params.id) };
         gestorBD.eliminarCancion(criterio,function(canciones){
